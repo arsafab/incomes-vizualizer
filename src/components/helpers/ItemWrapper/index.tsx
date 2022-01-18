@@ -7,6 +7,7 @@ interface Props {
   alignItems?: string;
   maxWidth?: string;
   margin?: string;
+  justifyContent?: string;
 }
 
 export const ItemWrapper: FC<Props> = ({ className, children }) => {

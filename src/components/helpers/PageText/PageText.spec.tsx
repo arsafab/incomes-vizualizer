@@ -2,8 +2,6 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 import { PageText } from '.';
 
-import 'jest-styled-components';
-
 describe(`PageText`, () => {
   test('should create component', () => {
     const component = create(<PageText />).toJSON();
@@ -21,5 +19,7 @@ describe(`PageText`, () => {
     const element = instance.findByType('span');
 
     expect(element.props.className).toEqual('test');
+    expect(instance.props.fontSize).toEqual('15px');
+    expect(instance.props.color).toEqual('red');
   });
 });

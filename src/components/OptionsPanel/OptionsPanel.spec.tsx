@@ -1,10 +1,10 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { Header } from '.';
+import { OptionsPanel } from '.';
 
-describe(`Header`, () => {
+describe(`OptionsPanel`, () => {
   test('should render component', () => {
-    const component = create(<Header />).toJSON();
+    const component = create(<OptionsPanel />).toJSON();
     expect(component).toMatchSnapshot();
   });
 });

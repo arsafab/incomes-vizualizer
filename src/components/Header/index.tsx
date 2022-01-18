@@ -1,16 +1,21 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 export const Header: FC = () => {
   return (
-    <header>
-      <div>To Do</div>
-    </header>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Incomes Vizualizer
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
-
-export const StyledHeader = styled(Header)`
-  width: 100%;
-  max-width: 1400px;
-  min-width: 600px;
-`;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { Header } from '.';
+import { CategoriesView } from '.';
 
-describe(`Header`, () => {
+describe(`CategoriesView`, () => {
   test('should render component', () => {
-    const component = create(<Header />).toJSON();
+    const component = create(<CategoriesView />).toJSON();
     expect(component).toMatchSnapshot();
   });
 });

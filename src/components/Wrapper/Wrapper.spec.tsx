@@ -1,10 +1,12 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { Header } from '.';
+import { Wrapper } from '.';
 
-describe(`Header`, () => {
+import 'jest-styled-components';
+
+describe(`Wrapper`, () => {
   test('should render component', () => {
-    const component = create(<Header />).toJSON();
+    const component = create(<Wrapper />).toJSON();
     expect(component).toMatchSnapshot();
   });
 });
