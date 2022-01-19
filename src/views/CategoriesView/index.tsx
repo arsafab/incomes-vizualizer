@@ -5,11 +5,26 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { decrement, increment } from '../../redux/slices/user.slice';
+
 import { Wrapper } from '../../components/Wrapper';
 
 export const CategoriesView: FC = () => {
+  const count = useAppSelector((state) => state.user.value);
+  const dispatch = useAppDispatch();
+
+  // eslint-disable-next-line no-console
+  console.log(count);
+
+  const test = () => {
+    dispatch(increment());
+  };
+
   return (
     <Wrapper flexDirection="column" alignItems="space-evenly">
+      <button onClick={test}>Click</button>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
           <Typography>Accordion 1</Typography>
@@ -40,3 +55,17 @@ export const CategoriesView: FC = () => {
     </Wrapper>
   );
 };
+
+// import React, { useState } from 'react'
+
+// import { useAppSelector, useAppDispatch } from 'app/hooks'
+
+// import { decrement, increment } from './counterSlice'
+
+// export function Counter() {
+//   // The `state` arg is correctly typed as `RootState` already
+//   const count = useAppSelector((state) => state.counter.value)
+//   const dispatch = useAppDispatch()
+
+//   // omit rendering logic
+// }
