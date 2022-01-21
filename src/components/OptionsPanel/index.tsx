@@ -6,45 +6,44 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { Wrapper } from '../Wrapper';
+import { MONTHS, VIEWS, View, Month } from '../../constants';
 
 export const OptionsPanel: FC = () => {
-  const [age, setAge] = useState('');
+  const currentMonth = MONTHS[new Date().getMonth()];
+  const [month, setMonth] = useState(currentMonth);
+  const [view, setView] = useState(View.Table);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+  const handleMonthChange = (event: SelectChangeEvent) => {
+    setMonth(event.target.value as Month);
+  };
+
+  const handleViewChange = (event: SelectChangeEvent) => {
+    setView(event.target.value as View);
   };
 
   return (
     <Wrapper flexDirection="row" justifyContent="space-between">
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">View</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="View"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+          <InputLabel id="view">View</InputLabel>
+          <Select labelId="view" value={view} label="View" onChange={handleViewChange}>
+            {VIEWS.map((view) => (
+              <MenuItem key={view} value={view}>
+                {view}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Month</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="Month"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+          <InputLabel id="month">Month</InputLabel>
+          <Select labelId="month" value={month} label="Month" onChange={handleMonthChange}>
+            {MONTHS.map((month) => (
+              <MenuItem key={month} value={month}>
+                {month}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>
