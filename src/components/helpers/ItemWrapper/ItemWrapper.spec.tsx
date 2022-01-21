@@ -19,6 +19,7 @@ describe(`ItemWrapper`, () => {
       maxWidth: '100px',
       margin: '10rem',
       justifyContent: 'space-between',
+      width: '100px',
     };
 
     const instance = create(<ItemWrapper {...props} />).root;
@@ -31,5 +32,8 @@ describe(`ItemWrapper`, () => {
     expect(instance.props.maxWidth).toEqual('100px');
     expect(instance.props.margin).toEqual('10rem');
     expect(instance.props.justifyContent).toEqual('space-between');
+    expect(instance.props.width).toEqual('100px');
   });
+
+  // TODO: add tests fro default parameters
 });

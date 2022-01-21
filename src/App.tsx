@@ -1,21 +1,31 @@
 import React, { FC } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { Container } from './components/Container';
-import { Header } from './components/Header';
-import { OptionsPanel } from './components/OptionsPanel';
-import { CategoriesView } from './views/CategoriesView';
+import { PrivateRoute } from './components/PrivateRoute';
+import { ProvideAuth } from './core/auth';
+import { Dashboard } from './pages/Dashboard';
+import { Login } from './pages/Login';
 
 import { GlobalStyle } from './styles/global';
 
-const App: FC = () => (
-  <>
+export const App: FC = () => (
+  <ProvideAuth>
     <GlobalStyle />
     <Container>
-      <Header />
-      <OptionsPanel />
-      {/* TODO: add something like routing for different views */}
-      <CategoriesView />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
     </Container>
-  </>
+  </ProvideAuth>
 );
-
-export default App;

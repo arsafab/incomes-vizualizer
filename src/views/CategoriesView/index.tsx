@@ -12,11 +12,9 @@ import { decrement, increment } from '../../redux/slices/user.slice';
 import { Wrapper } from '../../components/Wrapper';
 
 export const CategoriesView: FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const count = useAppSelector((state) => state.user.value);
   const dispatch = useAppDispatch();
-
-  // eslint-disable-next-line no-console
-  console.log(count);
 
   const test = () => {
     dispatch(increment());

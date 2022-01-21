@@ -6,8 +6,9 @@ interface Props {
   flexDirection?: string;
   alignItems?: string;
   maxWidth?: string;
-  margin?: string;
+  margin?: number | string;
   justifyContent?: string;
+  width?: string;
 }
 
 export const ItemWrapper: FC<Props> = ({ className, children }) => {
