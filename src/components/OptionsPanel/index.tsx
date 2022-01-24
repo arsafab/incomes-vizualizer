@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,34 +6,29 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { Wrapper } from '../Wrapper';
-import { MONTHS, VIEWS, View, Month } from '../../constants';
+import { MONTHS, Month } from '../../constants';
+import { AddModal } from '../AddModal';
+import { useAppDispatch } from '../../redux/hooks';
+import { setMonth as setMonthDispatch } from '../../redux/slices/options.slice';
 
 export const OptionsPanel: FC = () => {
   const currentMonth = MONTHS[new Date().getMonth()];
   const [month, setMonth] = useState(currentMonth);
-  const [view, setView] = useState(View.Table);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setMonthDispatch(month));
+  }, [month]);
 
   const handleMonthChange = (event: SelectChangeEvent) => {
-    setMonth(event.target.value as Month);
-  };
-
-  const handleViewChange = (event: SelectChangeEvent) => {
-    setView(event.target.value as View);
+    const month = event.target.value as Month;
+    setMonth(month);
   };
 
   return (
-    <Wrapper flexDirection="row" justifyContent="space-between">
+    <Wrapper flexDirection="row" justifyContent="space-between" alignItems="center">
       <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id="view">View</InputLabel>
-          <Select labelId="view" value={view} label="View" onChange={handleViewChange}>
-            {VIEWS.map((view) => (
-              <MenuItem key={view} value={view}>
-                {view}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <AddModal />
       </Box>
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>

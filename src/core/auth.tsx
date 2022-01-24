@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
-import React, { useState, useEffect, useContext, createContext, ReactNode } from 'react';
+import React, { useState, useContext, createContext, ReactNode, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { IAuth, User } from '../models';
-// import { getFirestore } from 'firebase/firestore';
+import { useAppDispatch } from '../redux/hooks';
+import { setUser as setUserDispatch } from '../redux/slices/user.slice';
 
 initializeApp({
   apiKey: 'AIzaSyC_U26Otci648gZLbJAZn-shy4qBQqCjhU',
@@ -15,7 +16,6 @@ initializeApp({
 });
 
 const auth = getAuth();
-// const db = getFirestore();
 const authContext = createContext({} as IAuth);
 
 export const ProvideAuth = ({ children }: { children: ReactNode | ReactNode[] }) => {
@@ -30,11 +30,13 @@ export const useAuth = () => {
 function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [loading, isLoading] = useState(true);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+        dispatch(setUserDispatch(createUser(user)));
         isLoading(false);
       } else {
         setUser(null);
@@ -52,25 +54,11 @@ function useProvideAuth() {
 
     try {
       const result = await signInWithPopup(auth, provider);
-      const { displayName: name, email, uid } = result.user;
-      const user = new User(uid, name, email);
-
-      // This gives you a Google Access Token.
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
+      const user = createUser(result.user);
 
       setUser(user);
+      dispatch(setUserDispatch(user));
       isLoading(false);
-
-      // const query = await db.collection('users').where('uid', '==', user.uid).get();
-      // if (query.docs.length === 0) {
-      //   await db.collection('users').add({
-      //     uid: user.uid,
-      //     name: user.displayName,
-      //     authProvider: 'google',
-      //     email: user.email,
-      //   });
-      // }
     } catch (err) {
       console.error(err);
     }
@@ -80,9 +68,15 @@ function useProvideAuth() {
     try {
       await auth.signOut();
       setUser(null);
+      dispatch(setUserDispatch({}));
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const createUser = (data) => {
+    const { displayName: name, email, uid } = data;
+    return new User(uid, name, email);
   };
 
   return {

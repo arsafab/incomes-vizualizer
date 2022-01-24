@@ -12,13 +12,19 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { Wrapper } from '../../components/Wrapper';
 import { Spinner } from '../../components/Spinner';
 import { useAuth } from '../../core/auth';
+import { useAppDispatch } from '../../redux/hooks';
+import { setFromStorage } from '../../redux/slices/items.slice';
+import { Item } from '../../constants';
 
 export const Login: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { user, loading, signInWithGoogle } = useAuth();
 
   useEffect(() => {
     if (user) {
+      const data = JSON.parse(localStorage.getItem(user.uid)) || [];
+      dispatch(setFromStorage(data as Item[]));
       navigate('/dashboard');
     }
   }, [user]);
