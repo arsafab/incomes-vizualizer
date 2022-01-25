@@ -34,6 +34,4 @@ describe(`ItemWrapper`, () => {
     expect(instance.props.justifyContent).toEqual('space-between');
     expect(instance.props.width).toEqual('100px');
   });
-
-  // TODO: add tests fro default parameters
 });
